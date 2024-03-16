@@ -53,4 +53,62 @@ SELECT sales."user_name",SUM(price) AS Total_spent
 
  -- 7.Find the distinct dates of each customer visited the website: 
 
- SELECT 
+SELECT DISTINCT s.created_date AS date, u.user_name AS customer_name
+FROM sales s INNER JOIN users u
+ON s.userid=u.userid
+
+-- 8.Find the first product purchased by each customer using 3 tables(users, sales, product)
+
+WITH RankedPurchases AS (
+    SELECT 
+        u.user_name AS customer_name, 
+        p.product_name AS product_purchased,
+        ROW_NUMBER() OVER (PARTITION BY u.userid ORDER BY s.created_date) AS purchase_rank
+    FROM users u
+    INNER JOIN sales s ON u.userid = s.userid
+    INNER JOIN product p ON s.product_id = p.product_id
+)
+SELECT customer_name, product_purchased
+FROM RankedPurchases
+WHERE purchase_rank = 1
+
+/*9.What is the most purchased item of each customer and how many times the customer has purchased it: 
+output should have 2 columns count of the items as item_count and customer name*/
+
+SELECT COUNT(*) AS item_count, user_name AS customer_name
+FROM sales
+GROUP BY user_name
+
+--10.Find out the customer who is not the gold_member_user
+
+SELECT u.user_name AS customer_name
+FROM users u LEFT JOIN gold_members g ON u.userid=g.userid
+WHERE g.userid IS NULL
+
+--11.What is the amount spent by each customer when he was the gold_member user
+
+SELECT 
+    g.user_name AS customer_name, 
+    SUM(p.price) AS total_amount_spent
+FROM 
+    gold_members g
+INNER JOIN 
+    sales s ON g.userid = s.userid
+    AND s.created_date >= g.signup_date -- Consider only sales made after becoming a gold member
+INNER JOIN 
+    product p ON s.product_id = p.product_id
+GROUP BY 
+    g.user_name;
+
+--12.Find the Customers names whose name starts with M
+
+SELECT user_name
+FROM users
+WHERE user_name LIKE 'M%'
+
+--13.Find the Distinct customer Id of each customer
+
+SELECT DISTINCT userid AS customer_id, user_name
+FROM users
+
+--
