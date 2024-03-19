@@ -25,7 +25,7 @@ INSERT INTO sales(userid,"user_name",created_date,product_id) VALUES
 
 INSERT INTO product(product_id,product_name,price) VALUES (1,'Mobile',980), (2,'Ipad',870), (3,'Laptop',330)
 
----- 5.Count all the records of all four tables using single query
+---- 4.Count all the records of all four tables using single query
 SELECT
     'gold_member_users' AS table_name,
     COUNT(*) AS record_count
@@ -46,19 +46,19 @@ SELECT
     COUNT(*) AS record_count
 FROM product;
 
---6.Total amount each customer spent on ecommerce company
+--5.Total amount each customer spent on ecommerce company
 
 SELECT sales."user_name",SUM(price) AS Total_spent
    FROM sales right join product on sales.product_id=product.product_id
  GROUP BY sales."user_name"
 
- -- 7.Distinct dates of each customer visited the website: 
+ -- 6.Distinct dates of each customer visited the website:
 
 SELECT DISTINCT s.created_date AS date, u.user_name AS customer_name
 FROM sales s INNER JOIN users u
 ON s.userid=u.userid
 
--- 8.First product purchased by each customer using 3 tables(users, sales, product)
+-- 7.First product purchased by each customer using 3 tables(users, sales, product)
 
 WITH RankedPurchases AS (
     SELECT 
@@ -73,20 +73,20 @@ SELECT customer_name, product_purchased
 FROM RankedPurchases
 WHERE purchase_rank = 1
 
-/*9.Most purchased item of each customer and how many times the customer has purchased it: 
+/*8.Most purchased item of each customer and how many times the customer has purchased it:
 output should have 2 columns count of the items as item_count and customer name*/
 
 SELECT COUNT(*) AS item_count, user_name AS customer_name
 FROM sales
 GROUP BY user_name
 
---10.Customer who is not the gold_member_user
+--9.Customer who is not the gold_member_user
 
 SELECT u.user_name AS customer_name
 FROM users u LEFT JOIN gold_members g ON u.userid=g.userid
 WHERE g.userid IS NULL
 
---11.Amount spent by each customer when he was the gold_member user
+--10.Amount spent by each customer when he was the gold_member user
 
 SELECT 
     g.user_name AS customer_name, 
@@ -101,31 +101,31 @@ INNER JOIN
 GROUP BY 
     g.user_name;
 
---12.Finding the Customers names whose name starts with M
+--11.Finding the Customers names whose name starts with M
 
 SELECT user_name
 FROM users
 WHERE user_name LIKE 'M%'
 
---13.Finding the Distinct customer Id of each customer
+--12.Finding the Distinct customer Id of each customer
 
 SELECT DISTINCT userid AS customer_id, user_name
 FROM users
 
---14.Changing the Column name from product table as price_value from price
+--13.Changing the Column name from product table as price_value from price
 EXEC sp_rename 'product.price','price_value','COLUMN'
 
---15.Changing the Column value product_name – Ipad to Iphone from product table
+--14.Changing the Column value product_name ï¿½ Ipad to Iphone from product table
 
 UPDATE product
 SET product_name = 'Iphone'
 WHERE product_name = 'Ipad'
 
---16.Changing the table name of gold_member_users to gold_membership_users
+--15.Changing the table name of gold_member_users to gold_membership_users
 
 EXEC sp_rename 'gold_members','gold_memberships_users'
 
-/*17.Creating a new column as Status in the table crate above gold_membership_users 
+/*16.Creating a new column as Status in the table crate above gold_membership_users
 the Status values should be 2 Yes and No 
 if the user is gold member, then status should be Yes else No.*/
 
@@ -141,7 +141,7 @@ END;
 SELECT u.user_name,COALESCE(g.status, 'No') AS status
 FROM users u LEFT JOIN gold_membership_users g ON u.userid = g.userid
 
-/*18.Delete the users_ids 1,2 from users table and roll the back changes 
+/*17.Delete the users_ids 1,2 from users table and roll the back changes
 once both the rows are deleted one by one mention the result when performed roll back*/
 
 BEGIN TRANSACTION
@@ -156,13 +156,13 @@ SELECT * FROM users
 
 ROLLBACK
 
---19.Insert one more record as same (3,'Laptop',330) as product table
+--18.Insert one more record as same (3,'Laptop',330) as product table
 
 INSERT INTO product VALUES(3,'Laptop',330)
 
 SELECT * FROM product
 
---20.Query to find the duplicates in product table
+--19.Query to find the duplicates in product table
 
 SELECT product_id,product_name, COUNT(*) AS duplicate_count
 FROM product
