@@ -1,6 +1,6 @@
-#### **Assignments**
+# Assignments
 
-**## #Assignment_1**
+## Assignment_1
 
 1.Creating Database as ecommerce 
 
@@ -9,7 +9,6 @@
 3.Insert the values provided above with respective datatypes
 
 4.Count all the records of all four tables using single query
-
 
 5.Total amount each customer spent on ecommerce company
 
@@ -44,7 +43,7 @@ once both the rows are deleted one by one mention the result when performed roll
 19.Query to find the duplicates in product table
 
 
-**## #Assignment_2**
+## Assignment_2
 
 1. Finding for each date the number of different products sold and their names. 
 table name = product_details
@@ -57,7 +56,7 @@ Column names: (sell_date, product)
 4. Finding for each date the number of different products sold and their names
 
 
-**## #Assignment_3**
+## Assignment_3
 
 1. Creating table dept_tbl
 
@@ -66,7 +65,7 @@ Column names: (sell_date, product)
 3. Finding the total salary of each department
 
 
-**## #Assignment_4**
+## Assignment_4
 
 1. Creating table email_signup
 
@@ -75,7 +74,7 @@ Column names: (sell_date, product)
 3. Finding Gmail accounts with latest and first signup date and difference between both the dates
 
 
-**## #Assignment_5**
+## Assignment_5
 
 1. Creating the table sales_data
 
@@ -88,7 +87,7 @@ Column names: (sell_date, product)
 5. Partition based on product_id and return the first and last values in ordered set
 
 
-**## #Assignment_6**
+## Assignment_6
 
 1. Designing ER diagram for university database system.
 
